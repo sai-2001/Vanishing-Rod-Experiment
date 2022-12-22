@@ -1,1 +1,0 @@
-# Vanishing-Rod-Experiment
