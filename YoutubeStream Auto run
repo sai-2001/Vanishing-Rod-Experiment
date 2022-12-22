@@ -1,0 +1,55 @@
+create a bash file
+/usr/local/bin/name.sh                                            # create a shell file at this location
+
+include these lines in name.sh file
+
+#!/bin/bash
+
+raspivid -o - -t 0 -fps 30 -b 6000000 | ffmpeg -re -ar 44100 -ac 2 -acodec pcm_s16le -f s16le -ac 2 -i 
+/dev/zero -f h264 -i - -vcodec copy -acodec aac -ab 128k -g 50 -strict experimental -f flv rtmp:
+//a.rtmp.youtube.com/live2/(enter the stream key here)
+
+-------------------
+
+Service file
+/etc/systemd/system/name_of_file.service                                                # create Service file at that location
+
+
+Include these lines in name_of_file.service file
+
+[Unit]
+Description=My test service
+After=multi-user.service
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/name_of_file.sh
+
+[Install]
+WantedBy=multi-user.target
+
+--------------------------------------
+
+Enter the command in terminal
+
+sudo systemctl daemon-reload                                #Reload the service file when changed
+
+sudo systemctl enable name_of_file.service
+
+-----------------------------------
+
+commands to operate service file
+
+sudo systemctl start name_of_file.service                   # To start the service file
+
+sudo systemctl status name_of_file.service                  #To check the status of the service file
+
+sudo systemctl stop name_of_file.service                    # To stop executing the service file
+
+sudo systemctl restart name_of_file.service                 # To restart the service file
+
+
+
+
+
