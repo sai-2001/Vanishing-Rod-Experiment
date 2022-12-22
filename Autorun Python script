@@ -1,0 +1,42 @@
+Service file for python
+
+/etc/systemd/system/name_of_file.service              # create the file at this location
+
+
+Insert the following commands in service file
+
+[Unit]
+Wants=network-online.target
+After=network-online.target
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStat=/usr/bin/python3 /home/raspberry1/name_of_file.py
+
+[Install]
+WantedBy=multi-user.target
+
+------------------------------------
+
+Enter the command in terminal
+
+sudo systemctl daemon-reload                                #Reload the service file when changed
+
+sudo systemctl enable name_of_file.service
+
+-----------------------------------
+
+commands to operate service file
+
+sudo systemctl start name_of_file.service                   # To start the service file
+
+sudo systemctl status name_of_file.service                  #To check the status of the service file
+
+sudo systemctl stop name_of_file.service                    # To stop executing the service file
+
+sudo systemctl restart name_of_file.service                 # To restart the service file
+
+Reference:
+https://linuxconfig.org/how-to-automatically-execute-shell-script-at-startup-boot-on-systemd-linux
